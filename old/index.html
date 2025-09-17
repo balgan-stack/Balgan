@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Нэвтрэх</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      height: 100vh;
+      background: #ecf0f3;
+    }
+    .container {
+      position: relative;
+      width: 800px; height: 500px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .form-container {
+      position: absolute;
+      top: 0; height: 100%; width: 50%;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 0 40px;
+      transition: all 0.8s ease;
+    }
+    .form-container h2 {
+      margin-bottom: 20px; color: #34A89A;
+    }
+    .form-container input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: none;
+      background: #f0f0f0;
+      border-radius: 8px;
+    }
+    .form-container button.main-btn {
+      margin-top: 15px;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 25px;
+      background: #34A89A;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      transition: transform 0.2s ease;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .form-container button.main-btn:hover { transform: scale(1.05); }
+
+    /* Нууц үг мартсан холбоос */
+    .forgot-password {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: #34A89A;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .forgot-password:hover {
+      color: #1d807a;
+    }
+
+    /* Default байрлал */
+    .login-container { left: 0; z-index: 2; }
+    .signup-container { left: 0; opacity: 0; z-index: 1; }
+
+    /* Active үед байрлал солино */
+    .container.active .login-container {
+      transform: translateX(100%);
+      opacity: 0;
+      z-index: 1;
+    }
+    .container.active .signup-container {
+      transform: translateX(100%);
+      opacity: 1;
+      z-index: 2;
+    }
+
+    /* Overlay panel */
+    .overlay-container {
+      position: absolute;
+      top: 0; left: 50%;
+      width: 50%; height: 100%;
+      background: linear-gradient(45deg,#34A89A,#44B390);
+      color: #fff;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center;
+      padding: 0 40px;
+      transition: transform 0.8s ease;
+      z-index: 5;
+    }
+    .container.active .overlay-container {
+      transform: translateX(-100%);
+    }
+    .overlay-container h2 { margin-bottom: 10px; }
+    .overlay-container p { font-size: 0.9rem; margin-bottom: 20px; }
+    .overlay-container button {
+      background: transparent;
+      border: 2px solid white;
+      padding: 10px 25px;
+      border-radius: 25px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    /* Social login товчнууд */
+    .social-login {
+      margin-top: 20px;
+      text-align: center;
+      width: 100%;
+    }
+    .social-login p {
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+    .social-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .social-buttons button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      color: white;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: transform 0.2s ease;
+    }
+    .social-buttons button:hover { transform: scale(1.05); }
+
+    .social-buttons .facebook { background: #3b5998; }
+    .social-buttons .google { background: #db4437; }
+    .social-buttons .gmail { background: #d14836; }
+    .social-buttons .phone { background: #34A89A; }
+
+    .social-buttons svg {
+      width: 16px;
+      height: 16px;
+      fill: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="container">
+    <!-- Нэвтрэх -->
+    <div class="form-container login-container">
+      <h2>Нэвтрэх</h2>
+      <input type="email" placeholder="И-мэйл" />
+      <input type="password" placeholder="Нууц үг" />
+      <button class="main-btn">Нэвтрэх</button>
+      <a href="#" class="forgot-password">Нууц үг мартсан?</a>
+    </div>
+
+    <!-- Бүртгүүлэх -->
+    <div class="form-container signup-container">
+      <h2>Бүртгүүлэх</h2>
+      <input type="text" placeholder="Нэр" />
+      <input type="email" placeholder="И-мэйл" />
+      <input type="password" placeholder="Нууц үг" />
+      <button class="main-btn">Бүртгүүлэх</button>
+
+      <!-- Social login товчнууд -->
+      <div class="social-login">
+        <p>Эсвэл нэвтрэх:</p>
+        <div class="social-buttons">
+          <button class="facebook">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.5 9.95v-7.05h-2.1v-2.9h2.1v-2.2c0-2.08 1.23-3.23 3.12-3.23.9 0 1.84.16 1.84.16v2.03h-1.04c-1.03 0-1.35.64-1.35 1.3v1.94h2.3l-.37 2.9h-1.93v7.05A10 10 0 0 0 22 12z"/></svg>
+            Facebook
+          </button>
+          <button class="google">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M44.5 20H24v8.5h11.8C34 34 30.5 38 24 38 14.6 38 7 30.4 7 21S14.6 4 24 4c5.5 0 10.2 2 13.9 5.3l-5.7 5.7C30.7 10.4 27.6 9 24 9 15.2 9 8 16.2 8 25s7.2 16 16 16c8.2 0 15-6.1 15.9-14H24v-7h20.5z"/></svg>
+            Google
+          </button>
+          <button class="gmail">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            Gmail
+          </button>
+          <button class="phone">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.11-.21c1.2.48 2.5.73 3.83.73a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1C10.07 22 2 13.93 2 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.33.25 2.63.73 3.83a1 1 0 0 1-.21 1.11l-2.2 2.2z"/></svg>
+            Phone
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay-container">
+      <h2>Welcome!</h2>
+      <p>Click the button to switch between Login and Register.</p>
+      <button id="switchBtn">Sign In / Sign Up</button>
+    </div>
+  </div>
+
+  <script>
+    const container = document.getElementById("container");
+    const switchBtn = document.getElementById("switchBtn");
+
+    switchBtn.addEventListener("click", () => {
+      container.classList.toggle("active");
+    });
+  </script>
+</body>
+</html>
